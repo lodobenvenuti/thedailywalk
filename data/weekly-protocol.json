@@ -1,0 +1,129 @@
+{
+  "protocol": {
+    "name": "Weekly Workout Protocol",
+    "version": "1.0",
+    "days": [
+      {
+        "day": "Monday",
+        "sessions": [
+          {
+            "time": "AM",
+            "title": "3-Mile Tempo Run",
+            "category": "cardio",
+            "exercises": [
+              { "name": "Tempo Run", "distance": "3 miles" }
+            ]
+          },
+          {
+            "time": "PM",
+            "title": "Heavy Upper Body",
+            "category": "strength",
+            "exercises": [
+              { "name": "Dumbbell Press" },
+              { "name": "Rows" },
+              { "name": "Arnold Press" },
+              { "name": "Pull-ups" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Tuesday",
+        "sessions": [
+          {
+            "time": "PM",
+            "title": "20-Min Heavy Kettlebell EMOM",
+            "category": "conditioning",
+            "duration": "20 min",
+            "format": "EMOM",
+            "exercises": [
+              { "name": "Swings" },
+              { "name": "Clean & Press" },
+              { "name": "Goblet Squats" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Wednesday",
+        "sessions": [
+          {
+            "time": "AM",
+            "title": "Sprint Intervals",
+            "category": "cardio",
+            "exercises": [
+              { "name": "400m Sprints", "sets": 6, "distance": "400m" }
+            ]
+          },
+          {
+            "time": "PM",
+            "title": "Heavy Lower Body",
+            "category": "strength",
+            "exercises": [
+              { "name": "Goblet Squats" },
+              { "name": "RDLs" },
+              { "name": "Split Squats" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Thursday",
+        "sessions": [
+          {
+            "time": "PM",
+            "title": "Kettlebell Core & Pull-up AMRAP",
+            "category": "conditioning",
+            "duration": "15 min",
+            "format": "AMRAP",
+            "exercises": [
+              { "name": "Kettlebell Core Work" },
+              { "name": "Pull-ups" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Friday",
+        "sessions": [
+          {
+            "time": "AM",
+            "title": "3-4 Mile Zone 2 Run",
+            "category": "cardio",
+            "exercises": [
+              { "name": "Zone 2 Run", "distance": "3-4 miles" }
+            ]
+          },
+          {
+            "time": "PM",
+            "title": "Full Body",
+            "category": "strength",
+            "exercises": [
+              { "name": "Dips" },
+              { "name": "DB Press" },
+              { "name": "Farmer's Carries" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Saturday",
+        "sessions": [
+          {
+            "time": "AM",
+            "title": "Long Run",
+            "category": "cardio",
+            "exercises": [
+              { "name": "Long Run", "distance": "5+ miles" }
+            ]
+          }
+        ]
+      },
+      {
+        "day": "Sunday",
+        "sessions": [],
+        "rest": true
+      }
+    ]
+  }
+}

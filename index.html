@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Daily Walk - Weekly Workout Protocol</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --surface-hover: #222222;
+      --border: #2a2a2a;
+      --text: #e5e5e5;
+      --text-muted: #888888;
+      --accent-cardio: #f97316;
+      --accent-strength: #3b82f6;
+      --accent-conditioning: #a855f7;
+      --accent-rest: #22c55e;
+      --badge-am: #facc15;
+      --badge-pm: #6366f1;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.25rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .week-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .day-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      transition: border-color 0.15s;
+    }
+
+    .day-card:hover {
+      border-color: #444;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.875rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .day-name {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .day-tag {
+      font-size: 0.6875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      color: var(--bg);
+    }
+
+    .tag-cardio { background: var(--accent-cardio); }
+    .tag-strength { background: var(--accent-strength); }
+    .tag-conditioning { background: var(--accent-conditioning); }
+    .tag-rest { background: var(--accent-rest); }
+
+    .sessions {
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .session {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .time-badge {
+      flex-shrink: 0;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      width: 2rem;
+      text-align: center;
+      padding: 0.15rem 0;
+      border-radius: 0.25rem;
+      margin-top: 0.15rem;
+    }
+
+    .time-am {
+      background: var(--badge-am);
+      color: var(--bg);
+    }
+
+    .time-pm {
+      background: var(--badge-pm);
+      color: #fff;
+    }
+
+    .session-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .session-title {
+      font-weight: 600;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .exercises {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.375rem;
+    }
+
+    .exercise {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--bg);
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+    }
+
+    .rest-message {
+      padding: 1.25rem;
+      text-align: center;
+      color: var(--accent-rest);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    .session-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @media (min-width: 640px) {
+      .week-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .week-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .day-card.rest-day {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Weekly Workout Protocol</h1>
+      <p>7-Day Training Split</p>
+    </header>
+    <div class="week-grid" id="week-grid"></div>
+  </div>
+
+  <script>
+    const getCategoryTags = (sessions) => {
+      const categories = [...new Set(sessions.map(s => s.category))];
+      return categories;
+    };
+
+    const renderExercise = (exercise) => {
+      let label = exercise.name;
+      if (exercise.sets) label = `${exercise.sets}x ${label}`;
+      if (exercise.distance) label += ` (${exercise.distance})`;
+      return `<span class="exercise">${label}</span>`;
+    };
+
+    const renderSession = (session) => `
+      <div class="session">
+        <span class="time-badge time-${session.time.toLowerCase()}">${session.time}</span>
+        <div class="session-content">
+          <div class="session-title">${session.title}</div>
+          <div class="exercises">
+            ${session.exercises.map(renderExercise).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    const renderDay = (day) => {
+      if (day.rest) {
+        return `
+          <div class="day-card rest-day">
+            <div class="day-header">
+              <span class="day-name">${day.day}</span>
+              <span class="day-tag tag-rest">Rest</span>
+            </div>
+            <div class="rest-message">Recovery Day</div>
+          </div>
+        `;
+      }
+
+      const tags = getCategoryTags(day.sessions);
+      const tagHtml = tags.map(t => `<span class="day-tag tag-${t}">${t}</span>`).join(' ');
+      const sessionsHtml = day.sessions
+        .map((s, i) => {
+          const divider = i > 0 ? '<div class="session-divider"></div>' : '';
+          return divider + renderSession(s);
+        })
+        .join('');
+
+      return `
+        <div class="day-card">
+          <div class="day-header">
+            <span class="day-name">${day.day}</span>
+            <div style="display:flex;gap:0.375rem">${tagHtml}</div>
+          </div>
+          <div class="sessions">${sessionsHtml}</div>
+        </div>
+      `;
+    };
+
+    fetch('./data/weekly-protocol.json')
+      .then(res => res.json())
+      .then(data => {
+        const grid = document.getElementById('week-grid');
+        grid.innerHTML = data.protocol.days.map(renderDay).join('');
+      })
+      .catch(err => {
+        console.error('Failed to load protocol:', err);
+        document.getElementById('week-grid').innerHTML =
+          '<p style="color:#888;text-align:center;grid-column:1/-1">Failed to load workout data.</p>';
+      });
+  </script>
+</body>
+</html>
